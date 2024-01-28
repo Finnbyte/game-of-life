@@ -24,14 +24,16 @@ def main():
     CLOCK = pygame.time.Clock()
     font = pygame.font.SysFont(None, 32)
 
-    grid_surface = pygame.display.set_mode((GRID_SIZE, GRID_SIZE))
+    top_panel_surface = pygame.Surface((WINDOW_WIDTH, TOP_OFFSET))
     running = True
     is_editing_grid = True
     while running:
         SCREEN.fill(WHITE)
-        SCREEN.blit(font.render(f"{'Editing' if is_editing_grid else 'Simulating'}", True, BLACK), (0,0))
         draw_grid(grid_surface)
+        top_panel_surface.fill(WHITE)
 
+        top_panel_surface.blit(font.render(f"{'Editing' if is_editing_grid else 'Simulating'}", True, BLACK), (0,0))
+        SCREEN.blit(top_panel_surface, (0, 0))
         if not is_editing_grid:
             process_generation(grid)
 
