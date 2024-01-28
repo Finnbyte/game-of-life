@@ -46,7 +46,7 @@ def main():
                 pygame.quit()
 
         pygame.display.update()
-        CLOCK.tick(60 if is_editing_grid else 20)
+        CLOCK.tick(30)
         
     sys.exit()
 
