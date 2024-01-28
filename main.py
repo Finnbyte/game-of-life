@@ -108,16 +108,19 @@ def process_generation(cells: list[list[int]]):
         for x, aliveness in enumerate(row):
             cells[y][x] = aliveness
 
-def draw_grid(screen):
-    top_offset = (CELL_SIZE * 2) - 1
+def draw_grid(surface):
     for y in range(0, GRID_SIZE):
         for x in range(0, GRID_SIZE):
-            outline = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE + TOP_OFFSET, CELL_SIZE, CELL_SIZE)
-            pygame.draw.rect(screen, GRAY, outline, 3)
-        
-            cell = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE + TOP_OFFSET, CELL_SIZE - 3, CELL_SIZE - 3)
-            cell_color = DARK_GRAY if grid[y][x] == 1 else WHITE
-            pygame.draw.rect(screen, cell_color, cell, CELL_SIZE)
+            outline = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            pygame.draw.rect(surface, GRAY, outline, 3)
+            
+
+def draw_grid_cells(surface):
+    for y in range(0, GRID_SIZE):
+        for x in range(0, GRID_SIZE):
+            cell = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE - 3, CELL_SIZE - 3)
+            pygame.draw.rect(surface, DARK_GRAY if grid[y][x] == 1 else WHITE, cell, CELL_SIZE)
+
     
 if __name__ == "__main__":
     main()
