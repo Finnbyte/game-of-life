@@ -25,15 +25,22 @@ def main():
     font = pygame.font.SysFont(None, 32)
 
     top_panel_surface = pygame.Surface((WINDOW_WIDTH, TOP_OFFSET))
+
+    grid_surface = pygame.Surface((GRID_SIZE, GRID_SIZE))
+    draw_grid(grid_surface)
+    grid_surface.fill(GRAY)
+
     running = True
     is_editing_grid = True
     while running:
-        SCREEN.fill(WHITE)
-        draw_grid(grid_surface)
         top_panel_surface.fill(WHITE)
 
         top_panel_surface.blit(font.render(f"{'Editing' if is_editing_grid else 'Simulating'}", True, BLACK), (0,0))
         SCREEN.blit(top_panel_surface, (0, 0))
+
+        draw_grid_cells(grid_surface)
+        SCREEN.blit(grid_surface, (0, TOP_OFFSET))
+
         if not is_editing_grid:
             process_generation(grid)
 
