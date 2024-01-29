@@ -1,19 +1,7 @@
 import pygame
 from math import ceil
 from copy import deepcopy
-
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GRAY = (220, 220, 220)
-DARK_GRAY = (105,105,105)
-
-WINDOW_WIDTH = 550
-WINDOW_HEIGHT = 550
-GRID_SIZE = 550
-CELL_SIZE = 20
-
-TOP_OFFSET = (CELL_SIZE * 2) - 1
-GRID_X_PADDING = 10
+from constants import *
 
 grid = [[0] * GRID_SIZE for i in range(GRID_SIZE)]
 
