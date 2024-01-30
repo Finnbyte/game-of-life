@@ -4,7 +4,7 @@ from top_panel import TopPanel
 
 WINDOW_WIDTH = 550
 WINDOW_HEIGHT = 550
-GRID_SIZE = 550
+GRID_SIZE = 200
 CELL_SIZE = 20
 
 TOP_OFFSET = (CELL_SIZE * 2) - 1
