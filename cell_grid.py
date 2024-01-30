@@ -5,9 +5,10 @@ from copy import deepcopy
 from colors import DARK_GRAY, WHITE
 
 class CellGrid:
-    def __init__(self, grid_size: int, y_offset: int):
+    def __init__(self, surface, grid_size: int, y_offset: int):
         self.is_editing_grid = True        
         self._Y_OFFSET = y_offset
+        self.surface = surface
         self._GRID_SIZE = grid_size
         self._CELL_SIZE = 20
 
@@ -28,6 +29,7 @@ class CellGrid:
         new_aliveness = self.cells[row][col]^1
         self.cells[row][col] = new_aliveness
 
+        self.blit_cell_at(row, col, DARK_GRAY if new_aliveness == 1 else WHITE)
     def update(self):
         next_generation_cells = deepcopy(self.cells)
 
@@ -42,9 +44,15 @@ class CellGrid:
         for y, row in enumerate(next_generation_cells):
             for x, aliveness in enumerate(row):
                 self.cells[y][x] = aliveness
+            self.blit_cell_at(y, x, color)
 
     def draw(self, surface):
         for y in range(0, self._GRID_SIZE):
             for x in range(0, self._GRID_SIZE):
                 pygame.draw.rect(surface, DARK_GRAY if self.cells[y][x] == 1 else WHITE, 
                     (x*self._CELL_SIZE, y*self._CELL_SIZE, self._CELL_SIZE-1, self._CELL_SIZE-1))
+
+    def blit_cell_at(self, y, x, color):
+        cell = pygame.Surface([self._CELL_SIZE-1, self._CELL_SIZE-1])
+        cell.fill(color)
+        self.surface.blit(cell, ((x*self._CELL_SIZE, y*self._CELL_SIZE)))
