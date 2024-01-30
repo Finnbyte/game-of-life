@@ -8,7 +8,6 @@ GRID_SIZE = 200
 CELL_SIZE = 20
 
 TOP_OFFSET = (CELL_SIZE * 2) - 1
-GRID_X_PADDING = 10
 
 def main():
     pygame.init()
