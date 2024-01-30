@@ -1,6 +1,4 @@
 import pygame
-from math import ceil
-from copy import deepcopy
 from cell_grid import CellGrid
 from top_panel import TopPanel
 
@@ -52,5 +50,4 @@ def main():
     pygame.quit()
 
 if __name__ == "__main__":
-    import cProfile as profile
     main()
