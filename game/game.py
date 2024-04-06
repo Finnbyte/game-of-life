@@ -10,7 +10,7 @@ from enum import Enum
 def convert_pygame_xy_to_rowcols(pos):
     x, y = pos
     # offset by -1 to make into 0-based indexing
-    row = ceil((y - TOP_OFFSET) / CELL_SIZE) - 1
+    row = ceil((y - TOP_PANEL_HEIGHT) / CELL_SIZE) - 1
     col = ceil(x / CELL_SIZE) - 1
     return (row, col)
 
@@ -27,7 +27,7 @@ class Game:
         self.grid_surface.fill(WHITE)
 
         font = pygame.font.SysFont(None, 32)
-        self.top_panel = TopPanel(pygame.Surface((WINDOW_WIDTH, TOP_OFFSET)), font)
+        self.top_panel = TopPanel(pygame.Surface((WINDOW_WIDTH, TOP_PANEL_HEIGHT)), font)
 
     def run_until_quit(self):
         self._prepare()
@@ -64,7 +64,7 @@ class Game:
     
     def _update(self):
         self.SCREEN.blit(self.top_panel.surface, (0, 0))
-        self.SCREEN.blit(self.grid_surface, (0, TOP_OFFSET))
+        self.SCREEN.blit(self.grid_surface, (0, TOP_PANEL_HEIGHT))
 
         if self.state == GameState.SIMULATING:
             self.grid = CellGrid.process_next(self.grid)
