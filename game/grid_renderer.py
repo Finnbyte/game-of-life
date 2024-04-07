@@ -6,12 +6,11 @@ class GridRenderer:
     @staticmethod
     def draw_grid(surface: pygame.Surface, grid: CellGrid) -> None:
         for y, x in grid:
-            alive = grid.get(y, x)
             GridRenderer.draw_cell(surface, grid, y, x)
 
     @staticmethod
     def draw_cell(surface: pygame.Surface, grid: CellGrid, y: int, x: int) -> None:
-        alive = grid.get(y, x)
+        alive = grid.is_alive(y, x)
         color = BLACK if alive else WHITE
 
         cell = pygame.Surface([CELL_SIZE, CELL_SIZE])

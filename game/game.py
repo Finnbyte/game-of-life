@@ -53,8 +53,13 @@ class Game:
                 if self.state != GameState.EDITING:
                     return
                 row, col = convert_pygame_xy_to_rowcols(pygame.mouse.get_pos())
-                new_aliveness = self.grid.get(row, col)^1
-                self.grid.set(row, col, new_aliveness)
+
+                now_alive = not self.grid.is_alive(row, col)
+                if now_alive:
+                    self.grid.set_alive(row, col)
+                else:
+                    self.grid.set_dead(row, col)
+
                 GridRenderer.draw_cell(self.grid_surface, self.grid, 
                     row, col)
 
@@ -69,7 +74,7 @@ class Game:
 
         if self.state == GameState.SIMULATING and wait(ticks_delay, self.last):
             self.last = pygame.time.get_ticks()
-            self.grid = CellGrid.process_next(self.grid)
+            self.grid.process_next()
             GridRenderer.draw_grid(self.grid_surface, self.grid)
  
         pygame.display.update()

@@ -22,33 +22,39 @@ class CellGrid:
         else:
             self._grid = np.zeros((GRID_SIZE, GRID_SIZE), dtype=int)
     
-    def get(self, y: int, x: int) -> int:
-        return self._grid[y][x]
+    
+    def is_alive(self, y: int, x: int) -> bool:
         return self._grid[y][x] == ALIVE
 
-    def set(self, y: int, x: int, state: int) -> None:
-        self._grid[y][x] = state
+
+    def set_alive(self, y: int, x: int) -> None:
         self._grid[y][x] = ALIVE
+
+
+    def set_dead(self, y: int, x: int) -> None:
+        self._grid[y][x] = DEAD
+
 
     def _count_live_neighbors(self, row: int, col: int) -> int:
         alive_neighbors = 0
         for y in range(row - 1, row + 2):
             for x in range(col - 1, col + 2):
                 if 0 <= y < GRID_SIZE and 0 <= x < GRID_SIZE and not (y == row and x == col):
-                    if self.get(y, x) == 1:
+                    if self.is_alive(y, x):
                         alive_neighbors += 1
         return alive_neighbors
+
  
-    @staticmethod
-    def process_next(curr: Self) -> Self:
-        next_generation_grid = np.zeros_like(curr._grid)
-        for y, x in curr:
-            alive_neighbors = curr._count_live_neighbors(y, x)
-            if is_allowed_to_live(curr.get(y, x) == 1, alive_neighbors):
-                next_generation_grid[y][x] = 1
+    def process_next(self) -> None:
+        next_generation_grid = np.zeros_like(self._grid)
+        for y, x in self:
+            alive_neighbors = self._count_live_neighbors(y, x)
+            is_alive = self.is_alive(y, x)
+            if is_allowed_to_live(is_alive, alive_neighbors):
                 next_generation_grid[y][x] = ALIVE
 
-        return CellGrid(template=next_generation_grid)
+        self._grid = next_generation_grid
+
 
     def __iter__(self):
         for y, x in np.ndindex(self._grid.shape):
