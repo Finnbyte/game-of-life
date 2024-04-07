@@ -21,6 +21,12 @@ class TopPanel:
 
     def _build_title(self, game_state: GameState):
         return 'Editing' if game_state == GameState.EDITING else 'Simulating'
+    def handle_slider_event(self, x_axis_value: int):
+        self._slider.handle_event(self.surface, x_axis_value)
+
+
+    def mouse_on_slider(self, x: int, y: int) -> bool:
+        return self._slider.on_slider(x, y)
         
     def draw(self, game_state):
         self.surface.fill(WHITE)
