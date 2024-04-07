@@ -1,10 +1,7 @@
 import numpy as np
 from math import ceil
-from typing import Self
-from game.ruleset import is_allowed_to_live
 from game.constants import GRID_SIZE
 import pygame
-from copy import deepcopy
 
 ALIVE = 1
 DEAD = 0
@@ -59,4 +56,3 @@ class CellGrid:
     def __iter__(self):
         for y, x in np.ndindex(self._grid.shape):
             yield y, x
-
