@@ -31,10 +31,11 @@ class TopPanel:
     def mouse_on_slider(self, x: int, y: int) -> bool:
         return self._slider.on_slider(x, y)
         
-    def draw(self, game_state):
-        self.surface.fill(WHITE)
+
+    def draw(self, game_state: GameState) -> None:
+        self.surface.fill(WHITE) # otherwise leaves a buffer of colors and slider balls
+
+        self._slider.draw(self.surface)
 
         title = self._build_title(game_state) 
-
-        GAP = 3
-        self.surface.blit(self.font.render(title, True, BLACK), (GAP,GAP))
+        self.surface.blit(self._font.render(title, True, DARK_GRAY), (EDGE_GAP, EDGE_GAP))
