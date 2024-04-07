@@ -1,4 +1,4 @@
-from game.constants import *
+from constants import *
 import pygame
 from game.game_state import GameState
 from game.slider import Slider
@@ -19,8 +19,8 @@ class TopPanel:
             SLIDER_HEIGHT,
             GRAY,
             DARK_GRAY,
-            50,
             500,
+            50,
             70,
         )
 
