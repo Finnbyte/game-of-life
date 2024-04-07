@@ -45,11 +45,14 @@ class Game:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.state = GameState.EDITING if self.state == GameState.SIMULATING else GameState.SIMULATING
                 self.top_panel.draw(self.state)
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.top_panel.mouse_on_slider(*event.pos):
-                    self.top_panel.handle_slider_event(event.pos[0])
-                    self.top_panel.draw(self.state)
-            if event.type == pygame.MOUSEBUTTONUP:
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if not self.top_panel.mouse_on_slider(*event.pos):
+                    return
+                self.top_panel.handle_slider_event(event.pos[0])
+                self.top_panel.draw(self.state)
+
+            elif event.type == pygame.MOUSEBUTTONUP:
                 if self.state != GameState.EDITING:
                     return
                 row, col = convert_pygame_xy_to_rowcols(pygame.mouse.get_pos())
@@ -63,7 +66,7 @@ class Game:
                 GridRenderer.draw_cell(self.grid_surface, self.grid, 
                     row, col)
 
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
+            elif event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
                 self._handle_quit()
     
     def _update(self):
@@ -72,7 +75,11 @@ class Game:
 
         ticks_delay = int(self.top_panel.get_slider_value())
 
-        if self.state == GameState.SIMULATING and wait(ticks_delay, self.last):
+        if self.state == GameState.SIMULATING:
+            done = wait(ticks_delay, self.last)
+            if not done:
+                return
+
             self.last = pygame.time.get_ticks()
             self.grid.process_next()
             GridRenderer.draw_grid(self.grid_surface, self.grid)
