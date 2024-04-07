@@ -19,8 +19,11 @@ class TopPanel:
     def get_slider_value(self) -> int:
         return self._slider.value
 
-    def _build_title(self, game_state: GameState):
-        return 'Editing' if game_state == GameState.EDITING else 'Simulating'
+
+    def _build_title(self, game_state: GameState) -> str:
+        return "Editing" if game_state == GameState.EDITING else "Simulating"
+
+
     def handle_slider_event(self, x_axis_value: int):
         self._slider.handle_event(self.surface, x_axis_value)
 
