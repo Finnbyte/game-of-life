@@ -35,7 +35,6 @@ class CellGrid:
 
     def _count_alive_neighbors(self, row: int, col: int) -> int:
         """Counts alive neighbors of row, col."""
-        alive_neighbors = 0
         return [
             self.is_alive(y, x)
             for y in range(row - 1, row + 2)
