@@ -21,18 +21,22 @@ class CellGrid:
     
     
     def is_alive(self, y: int, x: int) -> bool:
+        """Returns True if cell in y,x is alive."""
         return self._grid[y][x] == ALIVE
 
 
     def set_alive(self, y: int, x: int) -> None:
+        """Sets cell at y,x to be alive."""
         self._grid[y][x] = ALIVE
 
 
     def set_dead(self, y: int, x: int) -> None:
+        """Sets cell at y,x to be dead."""
         self._grid[y][x] = DEAD
 
 
-    def _count_live_neighbors(self, row: int, col: int) -> int:
+    def _count_alive_neighbors(self, row: int, col: int) -> int:
+        """Counts alive neighbors of row, col."""
         alive_neighbors = 0
         for y in range(row - 1, row + 2):
             for x in range(col - 1, col + 2):
@@ -43,9 +47,10 @@ class CellGrid:
 
  
     def process_next(self) -> None:
+        """Processes next generation of this grid."""
         next_generation_grid = np.zeros_like(self._grid)
         for y, x in self:
-            alive_neighbors = self._count_live_neighbors(y, x)
+            alive_neighbors = self._count_alive_neighbors(y, x)
             is_alive = self.is_alive(y, x)
             if is_allowed_to_live(is_alive, alive_neighbors):
                 next_generation_grid[y][x] = ALIVE

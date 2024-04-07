@@ -34,13 +34,15 @@ class Game:
         self.top_panel = TopPanel(pygame.Surface((WINDOW_WIDTH, TOP_PANEL_HEIGHT)), font)
 
     def run_until_quit(self):
+        """Runs until user quits the game."""
         self.top_panel.draw(self.state)
         GridRenderer.prepare_grid(self.grid_surface)
         while True:
             self._handle_events(pygame.event.get())
-            self._update()
+            self._update_and_draw()
 
     def _handle_events(self, events: list[pygame.event.Event]):
+        """Handles list of Pygame events."""
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.state = GameState.EDITING if self.state == GameState.SIMULATING else GameState.SIMULATING
@@ -69,10 +71,12 @@ class Game:
             elif event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
                 self._handle_quit()
     
-    def _update(self):
+    def _update_and_draw(self):
+        """Updates and draws screen."""
         self.SCREEN.blit(self.top_panel.surface, (0, 0))
         self.SCREEN.blit(self.grid_surface, (0, TOP_PANEL_HEIGHT))
 
+        # Use slider's value to make grid simulation dynamic
         ticks_delay = int(self.top_panel.get_slider_value())
 
         if self.state == GameState.SIMULATING:
@@ -87,5 +91,6 @@ class Game:
         pygame.display.update()
 
     def _handle_quit(self):
+        """Handles quit of game."""
         pygame.quit()
         exit()
