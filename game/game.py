@@ -2,6 +2,7 @@ from sys import exit
 import pygame
 from game.constants import *
 from math import ceil
+from game.wait import wait
 from game.game_state import GameState
 from game.cell_grid import CellGrid
 from game.top_panel import TopPanel
@@ -22,6 +23,8 @@ class Game:
 
         self.state = GameState.EDITING
         self.grid = CellGrid()
+
+        self.last = 0
 
         self.SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.grid_surface = pygame.Surface((GRID_SIZE*CELL_SIZE, GRID_SIZE*CELL_SIZE))
@@ -58,7 +61,8 @@ class Game:
                 new_aliveness = self.grid.get(row, col)^1
 
                 self.grid.set(row, col, new_aliveness)
-                self.draw_cell(row, col, DARK_GRAY if new_aliveness else WHITE)
+                GridRenderer.draw_cell(self.grid_surface, self.grid, 
+                    row, col)
 
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
                 self._handle_quit()
@@ -67,12 +71,13 @@ class Game:
         self.SCREEN.blit(self.top_panel.surface, (0, 0))
         self.SCREEN.blit(self.grid_surface, (0, TOP_PANEL_HEIGHT))
 
-        if self.state == GameState.SIMULATING:
+        ticks_delay = int(self.top_panel.get_slider_value())
+
+        if self.state == GameState.SIMULATING and wait(ticks_delay, self.last):
+            self.last = pygame.time.get_ticks()
             self.grid = CellGrid.process_next(self.grid)
-            for y, x in self.grid:
-                alive = self.grid.get(y, x)
-                self.draw_cell(y, x, DARK_GRAY if alive else WHITE)
-            
+            GridRenderer.draw_grid(self.grid_surface, self.grid)
+ 
         pygame.display.update()
 
     def _handle_quit(self):
