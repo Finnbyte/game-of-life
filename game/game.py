@@ -6,6 +6,7 @@ from game.game_state import GameState
 from game.cell_grid import CellGrid
 from game.top_panel import TopPanel
 from enum import Enum
+from game.grid_renderer import GridRenderer
 
 def convert_pygame_xy_to_rowcols(pos):
     x, y = pos
