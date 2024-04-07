@@ -1,6 +1,6 @@
 from sys import exit
 import pygame
-from game.constants import *
+from constants import *
 from math import ceil
 from game.wait import wait
 from game.game_state import GameState

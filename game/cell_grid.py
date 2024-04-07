@@ -1,6 +1,6 @@
 import numpy as np
 from math import ceil
-from game.constants import GRID_SIZE
+from constants import GRID_SIZE
 import pygame
 
 ALIVE = 1

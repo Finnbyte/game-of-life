@@ -1,5 +1,5 @@
 from game.cell_grid import CellGrid
-from game.constants import *
+from constants import *
 import pygame
 
 
