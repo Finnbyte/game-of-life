@@ -5,6 +5,10 @@ from game.ruleset import is_allowed_to_live
 from game.constants import GRID_SIZE
 import pygame
 from copy import deepcopy
+
+ALIVE = 1
+DEAD = 0
+
 def is_allowed_to_live(currently_alive: bool, alive_neighbors: int) -> bool:
     can_stay_alive = currently_alive and (alive_neighbors == 3 or alive_neighbors == 2)
     can_resurrect = not currently_alive and alive_neighbors == 3
@@ -20,9 +24,11 @@ class CellGrid:
     
     def get(self, y: int, x: int) -> int:
         return self._grid[y][x]
+        return self._grid[y][x] == ALIVE
 
     def set(self, y: int, x: int, state: int) -> None:
         self._grid[y][x] = state
+        self._grid[y][x] = ALIVE
 
     def _count_live_neighbors(self, row: int, col: int) -> int:
         alive_neighbors = 0
@@ -40,6 +46,7 @@ class CellGrid:
             alive_neighbors = curr._count_live_neighbors(y, x)
             if is_allowed_to_live(curr.get(y, x) == 1, alive_neighbors):
                 next_generation_grid[y][x] = 1
+                next_generation_grid[y][x] = ALIVE
 
         return CellGrid(template=next_generation_grid)
 
