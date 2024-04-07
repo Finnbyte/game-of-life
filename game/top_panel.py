@@ -1,10 +1,16 @@
 from game.constants import BLACK, WHITE
 from game.game_state import GameState
+EDGE_GAP = 10
+SLIDER_WIDTH = 150
+SLIDER_HEIGHT = 20
 
 class TopPanel:
-    def __init__(self, surface, font):
-        self.font = font
+    def __init__(self, surface, font) -> None:
         self.surface = surface
+        self._font = font
+        self._slider = Slider(WINDOW_WIDTH - SLIDER_WIDTH - (EDGE_GAP * 2), EDGE_GAP, 
+           SLIDER_WIDTH, SLIDER_HEIGHT,
+           GRAY, DARK_GRAY, 50, 500, 70)
 
     def _build_title(self, game_state: GameState):
         return 'Editing' if game_state == GameState.EDITING else 'Simulating'
