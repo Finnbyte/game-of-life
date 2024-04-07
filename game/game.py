@@ -45,6 +45,10 @@ class Game:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.state = GameState.EDITING if self.state == GameState.SIMULATING else GameState.SIMULATING
                 self.top_panel.draw(self.state)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.top_panel.mouse_on_slider(*event.pos):
+                    self.top_panel.handle_slider_event(event.pos[0])
+                    self.top_panel.draw(self.state)
             if event.type == pygame.MOUSEBUTTONUP:
                 if self.state != GameState.EDITING:
                     return
