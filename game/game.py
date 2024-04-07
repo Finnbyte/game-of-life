@@ -79,9 +79,3 @@ class Game:
     def _handle_quit(self):
         pygame.quit()
         exit()
-
-    def draw_cell(self, y, x, color):
-        cell = pygame.Surface([CELL_SIZE, CELL_SIZE])
-        cell.fill(color)
-        
-        self.grid_surface.blit(cell, ((x*CELL_SIZE, y*CELL_SIZE)))
