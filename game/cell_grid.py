@@ -5,6 +5,11 @@ from game.ruleset import is_allowed_to_live
 from game.constants import GRID_SIZE
 import pygame
 from copy import deepcopy
+def is_allowed_to_live(currently_alive: bool, alive_neighbors: int) -> bool:
+    can_stay_alive = currently_alive and (alive_neighbors == 3 or alive_neighbors == 2)
+    can_resurrect = not currently_alive and alive_neighbors == 3
+
+    return True if can_stay_alive or can_resurrect else False
 
 class CellGrid:
     def __init__(self, template: list[list[int]] | None = None):
