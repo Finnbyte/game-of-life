@@ -1,5 +1,8 @@
-from game.constants import BLACK, WHITE
+from game.constants import *
+import pygame
 from game.game_state import GameState
+from game.slider import Slider
+
 EDGE_GAP = 10
 SLIDER_WIDTH = 150
 SLIDER_HEIGHT = 20
