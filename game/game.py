@@ -52,10 +52,8 @@ class Game:
             if event.type == pygame.MOUSEBUTTONUP:
                 if self.state != GameState.EDITING:
                     return
-
                 row, col = convert_pygame_xy_to_rowcols(pygame.mouse.get_pos())
                 new_aliveness = self.grid.get(row, col)^1
-
                 self.grid.set(row, col, new_aliveness)
                 GridRenderer.draw_cell(self.grid_surface, self.grid, 
                     row, col)
