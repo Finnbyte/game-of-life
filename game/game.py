@@ -34,11 +34,9 @@ class Game:
         self.top_panel = TopPanel(pygame.Surface((WINDOW_WIDTH, TOP_PANEL_HEIGHT)), font)
 
     def run_until_quit(self):
-        clock = pygame.time.Clock()
         self.top_panel.draw(self.state)
         GridRenderer.prepare_grid(self.grid_surface)
         while True:
-            clock.tick(FPS)
             self._handle_events(pygame.event.get())
             self._update()
 
