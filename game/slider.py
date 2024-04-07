@@ -1,7 +1,19 @@
 import pygame
 
+
 class Slider:
-    def __init__(self, x: int, y: int, w: int, h: int, bg_color: tuple[int], ball_color: tuple[int], min_value: int, max_value: int, initial_value: int | None = None) -> None:
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        w: int,
+        h: int,
+        bg_color: tuple[int],
+        ball_color: tuple[int],
+        min_value: int,
+        max_value: int,
+        initial_value: int | None = None,
+    ) -> None:
         self.sliderRect = pygame.Rect(x, y, w, h)
         self.ball_color = ball_color
         self.bg_color = bg_color
@@ -13,8 +25,18 @@ class Slider:
         """Draws slider bar."""
         pygame.draw.rect(screen, self.bg_color, self.sliderRect)
         # Calculate the position of the circle based on the current value
-        circle_x = int(self.sliderRect.x + (self.value - self.min_value) / (self.max_value - self.min_value) * self.sliderRect.w)
-        pygame.draw.circle(screen, self.ball_color, (circle_x, self.sliderRect.centery), int(self.sliderRect.h * 0.75))
+        circle_x = int(
+            self.sliderRect.x
+            + (self.value - self.min_value)
+            / (self.max_value - self.min_value)
+            * self.sliderRect.w
+        )
+        pygame.draw.circle(
+            screen,
+            self.ball_color,
+            (circle_x, self.sliderRect.centery),
+            int(self.sliderRect.h * 0.75),
+        )
 
     def get_value(self):
         """Returns instance's current value."""

@@ -9,12 +9,14 @@ from game.top_panel import TopPanel
 from enum import Enum
 from game.grid_renderer import GridRenderer
 
+
 def convert_pygame_xy_to_rowcols(pos):
     x, y = pos
     # offset by -1 to make into 0-based indexing
     row = ceil((y - TOP_PANEL_HEIGHT) / CELL_SIZE) - 1
     col = ceil(x / CELL_SIZE) - 1
     return (row, col)
+
 
 class Game:
     def __init__(self):
@@ -27,11 +29,15 @@ class Game:
         self.last = 0
 
         self.SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        self.grid_surface = pygame.Surface((GRID_SIZE*CELL_SIZE, GRID_SIZE*CELL_SIZE))
+        self.grid_surface = pygame.Surface(
+            (GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE)
+        )
         self.grid_surface.fill(WHITE)
 
         font = pygame.font.SysFont(None, 32)
-        self.top_panel = TopPanel(pygame.Surface((WINDOW_WIDTH, TOP_PANEL_HEIGHT)), font)
+        self.top_panel = TopPanel(
+            pygame.Surface((WINDOW_WIDTH, TOP_PANEL_HEIGHT)), font
+        )
 
     def run_until_quit(self):
         """Runs until user quits the game."""
@@ -45,7 +51,11 @@ class Game:
         """Handles list of Pygame events."""
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self.state = GameState.EDITING if self.state == GameState.SIMULATING else GameState.SIMULATING
+                self.state = (
+                    GameState.EDITING
+                    if self.state == GameState.SIMULATING
+                    else GameState.SIMULATING
+                )
                 self.top_panel.draw(self.state)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -65,12 +75,13 @@ class Game:
                 else:
                     self.grid.set_dead(row, col)
 
-                GridRenderer.draw_cell(self.grid_surface, self.grid, 
-                    row, col)
+                GridRenderer.draw_cell(self.grid_surface, self.grid, row, col)
 
-            elif event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
+            elif event.type == pygame.QUIT or (
+                event.type == pygame.KEYDOWN and event.key == pygame.K_q
+            ):
                 self._handle_quit()
-    
+
     def _update_and_draw(self):
         """Updates and draws screen."""
         self.SCREEN.blit(self.top_panel.surface, (0, 0))
@@ -87,7 +98,7 @@ class Game:
             self.last = pygame.time.get_ticks()
             self.grid.process_next()
             GridRenderer.draw_grid(self.grid_surface, self.grid)
- 
+
         pygame.display.update()
 
     def _handle_quit(self):

@@ -1,6 +1,7 @@
-from game.cell_grid import CellGrid 
+from game.cell_grid import CellGrid
 from game.constants import *
 import pygame
+
 
 class GridRenderer:
     @staticmethod
@@ -18,13 +19,12 @@ class GridRenderer:
         cell = pygame.Surface([CELL_SIZE, CELL_SIZE])
         cell.fill(color)
 
-        surface.blit(cell, ((x*CELL_SIZE, y*CELL_SIZE)))
-    
+        surface.blit(cell, ((x * CELL_SIZE, y * CELL_SIZE)))
+
     @staticmethod
     def prepare_grid(surface: pygame.Surface):
         """Prepares grid outlines once since they never change to maximize performance."""
         for x in range(WINDOW_WIDTH // CELL_SIZE):
             for y in range(WINDOW_HEIGHT // CELL_SIZE):
-                rect = pygame.Rect(x*CELL_SIZE, y*CELL_SIZE,
-                    CELL_SIZE, CELL_SIZE)
+                rect = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
                 pygame.draw.rect(surface, WHITE, rect, 1)
